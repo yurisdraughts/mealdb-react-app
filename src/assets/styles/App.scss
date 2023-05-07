@@ -1,0 +1,207 @@
+@use 'variables' as *;
+@use 'Header';
+
+#root {
+  margin: 0 auto;
+  max-width: $maw;
+  text-align: left;
+}
+
+.button {
+  display: block;
+  border-radius: 0.8em;
+  border: 1px solid $dark;
+  padding: 0.75em 1.2em;
+  font-size: 1.1em;
+  font-weight: 500;
+  font-family: inherit;
+  text-decoration: none;
+  color: $light2;
+  background-color: $dark;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $dark2;
+    color: $accent;
+    text-shadow:
+      1px 1px 0px $default,
+      1px -1px 0px $default,
+      -1px 1px 0px $default,
+      -1px -1px 0px $default;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  &_menu {
+    border: 5px double $dark2;
+    border-radius: 46%;
+    background:
+      repeating-linear-gradient(45deg,
+        transparent, transparent 2rem,
+        $dark2 2rem, $dark2 2.1rem,
+        transparent 2.1rem, transparent 2.3rem,
+        $dark2 2.3rem, $dark2 2.4rem),
+      repeating-linear-gradient(-45deg,
+        $dark, $dark 2rem,
+        $dark2 2rem, $dark2 2.1rem,
+        $dark 2.1rem, $dark 2.3rem,
+        $dark2 2.3rem, $dark2 2.4rem);
+
+    &:hover {
+      border-color: $dark;
+      background:
+        repeating-linear-gradient(45deg,
+          transparent, transparent 2rem,
+          $dark 2rem, $dark 2.1rem,
+          transparent 2.1rem, transparent 2.3rem,
+          $dark 2.3rem, $dark 2.4rem),
+        repeating-linear-gradient(-45deg,
+          $dark2, $dark2 2rem,
+          $dark 2rem, $dark 2.1rem,
+          $dark2 2.1rem, $dark2 2.3rem,
+          $dark 2.3rem, $dark 2.4rem);
+    }
+  }
+}
+
+.link {
+  font-weight: 500;
+  color: $accent-dark;
+  text-decoration-color: $accent;
+  text-decoration-style: wavy;
+
+  .navigation & {
+    color: $accent;
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    .page & {
+      text-shadow:
+        .3px .3px 0px $accent,
+        .3px -.3px 0px $accent,
+        -.3px .3px 0px $accent,
+        -.3px -.3px 0px $accent;
+    }
+  }
+}
+
+.strong {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: $accent-dark
+}
+
+.page {
+  position: relative;
+  margin: 0 auto;
+  border: 2px solid $dark;
+  border-radius: 20px;
+  padding: 2rem;
+  background: $light;
+  background: repeating-linear-gradient(-45deg,
+      $light, $light 5rem,
+      $light2 5rem, $light2 5.1rem,
+      $light 5.1rem, $light 5.3rem,
+      $light2 5.3rem, $light2 5.4rem);
+
+  &__button {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
+  }
+
+  &_home {
+    max-width: .5 * $maw;
+  }
+
+  p::first-letter {
+    font-weight: 700;
+  }
+}
+
+.meal {
+  &__image {
+    display: block;
+    margin: $h1-margin auto;
+    border-radius: 1.2em 1.4em .8em 1em;
+    border: 1px solid $dark;
+  }
+
+  &__ingredients-list {
+    border-collapse: collapse;
+
+    & td {
+      border: 1px solid $dark;
+      padding: .3em;
+    }
+
+    & tr:first-child td {
+      border-top: 0;
+    }
+
+    & tr td:first-child {
+      border-left: 0;
+    }
+
+    & tr:last-child td {
+      border-bottom: 0;
+    }
+
+    & tr td:last-child {
+      border-right: 0;
+    }
+  }
+
+  &__footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1em;
+    place-items: center;
+    width: fit-content;
+
+    @media (max-width: $break-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  background: rgba(255, 255, 255, .3);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+
+  &_youtube {
+    z-index: 20;
+  }
+}
+
+.youtube-player {
+  max-width: 90vw;
+  border-radius: 1rem;
+  border: 2px solid $default;
+
+  &__wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__close-button {
+    margin: 1em auto 0;
+  }
+}

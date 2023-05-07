@@ -1,0 +1,37 @@
+.display-none {
+    display: none !important;
+}
+
+.show {
+    animation-name: show;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+}
+
+.hide {
+    animation-name: hide;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

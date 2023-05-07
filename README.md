@@ -1,0 +1,2 @@
+### TODO:
+- [ ] Add loading animation

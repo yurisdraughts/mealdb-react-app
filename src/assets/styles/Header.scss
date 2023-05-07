@@ -1,0 +1,164 @@
+@use 'variables' as *;
+
+.App {
+  padding: ($header-height + $pad) $pad $pad;
+
+  @media (max-width: $break-lg) and (min-width: $break-sm) {
+    padding-top: 2 * $header-height + $pad;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: $header-height;
+  background-color: $dark;
+  width: 100%;
+  z-index: 10;
+  border-bottom: 2px solid $dark;
+
+  @media (max-width: $break-lg) and (min-width: $break-sm) {
+    height: 2 * $header-height;
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  max-width: $maw;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 $pad;
+
+  &_header {
+    justify-content: end;
+
+    @media (max-width: $break-lg) and (min-width: $break-sm) {
+      justify-content: center;
+    }
+  }
+
+  &__list {
+    gap: 1em;
+    margin: 0;
+    padding: 0;
+
+    &_header {
+      display: flex;
+
+      &,
+      &>li,
+      & .link {
+        height: 100%;
+      }
+
+      & .link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: 0 0.5em;
+        font-size: 1.2em;
+        transition: background-color 0.15s;
+
+        &:hover {
+          text-shadow:
+            1px 1px 0px $default,
+            1px -1px 0px $default,
+            -1px 1px 0px $default,
+            -1px -1px 0px $default;
+          background:
+            repeating-linear-gradient(45deg,
+              transparent, transparent 2.5rem,
+              $dark 2.5rem, $dark 2.6rem,
+              transparent 2.6rem, transparent 2.8rem,
+              $dark 2.8rem, $dark 2.9rem),
+            repeating-linear-gradient(-45deg,
+              $dark2, $dark2 2.5rem,
+              $dark 2.5rem, $dark 2.6rem,
+              $dark2 2.6rem, $dark2 2.8rem,
+              $dark 2.8rem, $dark 2.9rem);
+        }
+      }
+
+      @media (max-width: $break-lg) and (min-width: $break-sm) {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        grid-template-rows: repeat(2, $header-height);
+        row-gap: 0;
+      }
+
+      @media (max-width:$break-sm) {
+        display: none;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+        background-color: $dark;
+        padding-bottom: 1em;
+        border-bottom: 2px solid $dark;
+
+        &>li,
+        & .link {
+          height: $header-height;
+        }
+      }
+    }
+
+    &_first-letters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      & .button {
+        text-align: center;
+      }
+
+      @media (max-width: $break-sm) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    &_categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      @media (max-width: $break-sm) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &_meals {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__image {
+    display: inline-block;
+    border-radius: 0.5em;
+    border: 1px solid $dark;
+    height: 2.5em;
+  }
+}
+
+.menu-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: .5 * $header-height;
+  height: $header-height;
+
+  @media (min-width: $break-sm) {
+    display: none !important;
+  }
+
+  &_close {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
