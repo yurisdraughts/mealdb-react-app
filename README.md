@@ -1,3 +1,3 @@
 ### TODO:
 - [ ] Add loading animation
-- [ ] Fix error handling
+- [x] Fix error handling

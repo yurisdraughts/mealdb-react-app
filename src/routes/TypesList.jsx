@@ -1,94 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import useSmoothDisplayChange from '../utils/useSmoothDisplayChange';
+import useSmoothDisplayChange from "../utils/useSmoothDisplayChange";
+import customFetch from "../utils/customFetch";
+import FetchCacheContext from "../utils/FetchCacheContext";
 
 export default function TypesList() {
-    const { show: [pageRef], transition: showPage }
-        = useSmoothDisplayChange({ show: { new: 1 } });
+  const {
+    show: [pageRef],
+    transition: showPage,
+  } = useSmoothDisplayChange({ show: { new: 1 } });
 
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    
-    const { type } = useParams();
-    let url, apiProperty;
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  if (error !== null) throw error;
 
-    if (type === 'categories') {
-        url = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-        apiProperty = 'strCategory';
-    } else if (type === 'ingredients') {
-        url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
-        apiProperty = 'strIngredient';
-    } else if (type === 'areas') {
-        url = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
-        apiProperty = 'strArea';
+  const { type } = useParams();
+  let url;
+  const [apiProperty, setApiProperty] = useState();
+
+  if (type === "categories") {
+    url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list";
+  } else if (type === "ingredients") {
+    url = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
+  } else if (type === "areas") {
+    url = "https://www.themealdb.com/api/json/v1/1/list.php?a=list";
+  }
+
+  const cache = useContext(FetchCacheContext);
+  useEffect(() => {
+    customFetch({
+      setLoading,
+      setData,
+      setError,
+      url,
+      cache,
+      dataExtractor: (data) => data.meals,
+    });
+
+    if (type === "categories") {
+      setApiProperty("strCategory");
+    } else if (type === "ingredients") {
+      setApiProperty("strIngredient");
+    } else if (type === "areas") {
+      setApiProperty("strArea");
     }
 
-    useEffect(() => {
-        (async () => {
-            try {
-                setLoading(true);
+    return () => {
+      showPage();
+    };
+  }, [type]);
 
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(
-                    `This is an HTTP error: The status is ${response.status}`
-                );
-                const data = await response.json();
-
-                setData(data.meals);
-                setError(null);
-            } catch (error) {
-                console.error(error);
-
-                setData(null);
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        })();
-
-        return showPage();
-    }, [type]);
-
-    return (
-        <div
-            className='display-none'
-            ref={pageRef}
-        >
-            {
-                !loading &&
-                <div
-                    className='page'
+  return (
+    <div className="page display-none" ref={pageRef}>
+      {!loading && data && (
+        <nav className="navigation">
+          <ul className="navigation__list navigation__list_categories">
+            {data.map((category, id) => (
+              <li key={id}>
+                <Link
+                  className="button page__button"
+                  to={encodeURI(category[apiProperty])}
                 >
-                    {
-                        error &&
-                        <p>
-                            {`An error occurred: ${error}`}
-                        </p>
-                    }
-                    {
-                        data &&
-                        <nav className="navigation">
-                            <ul
-                                className='navigation__list navigation__list_categories'
-                            >
-                                {
-                                    data.map((category, id) => (
-                                        <li key={id}>
-                                            <Link
-                                                className='button page__button'
-                                                to={encodeURI(category[apiProperty])}
-                                            >
-                                                {category[apiProperty]}
-                                            </Link>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </nav>
-                    }
-                </div>
-            }
-        </div>
-    );
+                  {category[apiProperty]}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+  );
 }

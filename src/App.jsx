@@ -1,19 +1,20 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-} from 'react-router-dom';
-import Layout from './components/Layout';
-import ErrorBoundary from './routes/ErrorBoundary';
-import Home from './routes/Home';
-import Meal from './routes/Meal';
-import MealsList from './routes/MealsList';
-import FirstLettersList from './routes/FirstLettersList';
-import TypesList from './routes/TypesList';
-import TitleContext from './utils/TitleContext';
-import './assets/styles/App.scss';
+} from "react-router-dom";
+import Layout from "./components/Layout";
+import ErrorBoundary from "./routes/ErrorBoundary";
+import Home from "./routes/Home";
+import Meal from "./routes/Meal";
+import MealsList from "./routes/MealsList";
+import FirstLettersList from "./routes/FirstLettersList";
+import TypesList from "./routes/TypesList";
+import TitleContext from "./utils/TitleContext";
+import FetchCacheContext from "./utils/FetchCacheContext";
+import "./assets/styles/App.scss";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,16 +29,20 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const defaultTitleSuffix = '??';
+  const defaultTitleSuffix = "??";
   const [titleSuffix, setTitleSuffix] = useState(defaultTitleSuffix);
 
   return (
     <div className="App">
-      <TitleContext.Provider value={{ titleSuffix, setTitleSuffix, defaultTitleSuffix }}>
-        <RouterProvider router={router} />
+      <TitleContext.Provider
+        value={{ titleSuffix, setTitleSuffix, defaultTitleSuffix }}
+      >
+        <FetchCacheContext.Provider value={new Map()}>
+          <RouterProvider router={router} />
+        </FetchCacheContext.Provider>
       </TitleContext.Provider>
     </div>
   );
 }
 
-export default App
+export default App;

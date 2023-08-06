@@ -1,5 +1,5 @@
-@use 'variables' as *;
-@use 'Header';
+@use "variables" as *;
+@use "Header";
 
 #root {
   margin: 0 auto;
@@ -24,11 +24,8 @@
   &:hover {
     background-color: $dark2;
     color: $accent;
-    text-shadow:
-      1px 1px 0px $default,
-      1px -1px 0px $default,
-      -1px 1px 0px $default,
-      -1px -1px 0px $default;
+    text-shadow: 1px 1px 0px $default, 1px -1px 0px $default,
+      -1px 1px 0px $default, -1px -1px 0px $default;
   }
 
   &:focus,
@@ -39,31 +36,53 @@
   &_menu {
     border: 5px double $dark2;
     border-radius: 46%;
-    background:
-      repeating-linear-gradient(45deg,
-        transparent, transparent 2rem,
-        $dark2 2rem, $dark2 2.1rem,
-        transparent 2.1rem, transparent 2.3rem,
-        $dark2 2.3rem, $dark2 2.4rem),
-      repeating-linear-gradient(-45deg,
-        $dark, $dark 2rem,
-        $dark2 2rem, $dark2 2.1rem,
-        $dark 2.1rem, $dark 2.3rem,
-        $dark2 2.3rem, $dark2 2.4rem);
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2rem,
+        $dark2 2rem,
+        $dark2 2.1rem,
+        transparent 2.1rem,
+        transparent 2.3rem,
+        $dark2 2.3rem,
+        $dark2 2.4rem
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        $dark,
+        $dark 2rem,
+        $dark2 2rem,
+        $dark2 2.1rem,
+        $dark 2.1rem,
+        $dark 2.3rem,
+        $dark2 2.3rem,
+        $dark2 2.4rem
+      );
 
     &:hover {
       border-color: $dark;
-      background:
-        repeating-linear-gradient(45deg,
-          transparent, transparent 2rem,
-          $dark 2rem, $dark 2.1rem,
-          transparent 2.1rem, transparent 2.3rem,
-          $dark 2.3rem, $dark 2.4rem),
-        repeating-linear-gradient(-45deg,
-          $dark2, $dark2 2rem,
-          $dark 2rem, $dark 2.1rem,
-          $dark2 2.1rem, $dark2 2.3rem,
-          $dark 2.3rem, $dark 2.4rem);
+      background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2rem,
+          $dark 2rem,
+          $dark 2.1rem,
+          transparent 2.1rem,
+          transparent 2.3rem,
+          $dark 2.3rem,
+          $dark 2.4rem
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          $dark2,
+          $dark2 2rem,
+          $dark 2rem,
+          $dark 2.1rem,
+          $dark2 2.1rem,
+          $dark2 2.3rem,
+          $dark 2.3rem,
+          $dark 2.4rem
+        );
     }
   }
 }
@@ -82,11 +101,8 @@
     text-decoration: none;
 
     .page & {
-      text-shadow:
-        .3px .3px 0px $accent,
-        .3px -.3px 0px $accent,
-        -.3px .3px 0px $accent,
-        -.3px -.3px 0px $accent;
+      text-shadow: 0.3px 0.3px 0px $accent, 0.3px -0.3px 0px $accent,
+        -0.3px 0.3px 0px $accent, -0.3px -0.3px 0px $accent;
     }
   }
 }
@@ -94,7 +110,7 @@
 .strong {
   font-weight: bold;
   font-size: 1.1em;
-  color: $accent-dark
+  color: $accent-dark;
 }
 
 .page {
@@ -104,11 +120,17 @@
   border-radius: 20px;
   padding: 2rem;
   background: $light;
-  background: repeating-linear-gradient(-45deg,
-      $light, $light 5rem,
-      $light2 5rem, $light2 5.1rem,
-      $light 5.1rem, $light 5.3rem,
-      $light2 5.3rem, $light2 5.4rem);
+  background: repeating-linear-gradient(
+    -45deg,
+    $light,
+    $light 5rem,
+    $light2 5rem,
+    $light2 5.1rem,
+    $light 5.1rem,
+    $light 5.3rem,
+    $light2 5.3rem,
+    $light2 5.4rem
+  );
 
   &__button {
     display: flex;
@@ -118,7 +140,7 @@
   }
 
   &_home {
-    max-width: .5 * $maw;
+    max-width: 0.5 * $maw;
   }
 
   p::first-letter {
@@ -130,7 +152,7 @@
   &__image {
     display: block;
     margin: $h1-margin auto;
-    border-radius: 1.2em 1.4em .8em 1em;
+    border-radius: 1.2em 1.4em 0.8em 1em;
     border: 1px solid $dark;
   }
 
@@ -139,7 +161,7 @@
 
     & td {
       border: 1px solid $dark;
-      padding: .3em;
+      padding: 0.3em;
     }
 
     & tr:first-child td {
@@ -179,7 +201,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 5;
-  background: rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, 0.3);
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   cursor: pointer;

@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .App {
   padding: ($header-height + $pad) $pad $pad;
@@ -48,7 +48,7 @@
       display: flex;
 
       &,
-      &>li,
+      & > li,
       & .link {
         height: 100%;
       }
@@ -62,22 +62,30 @@
         transition: background-color 0.15s;
 
         &:hover {
-          text-shadow:
-            1px 1px 0px $default,
-            1px -1px 0px $default,
-            -1px 1px 0px $default,
-            -1px -1px 0px $default;
-          background:
-            repeating-linear-gradient(45deg,
-              transparent, transparent 2.5rem,
-              $dark 2.5rem, $dark 2.6rem,
-              transparent 2.6rem, transparent 2.8rem,
-              $dark 2.8rem, $dark 2.9rem),
-            repeating-linear-gradient(-45deg,
-              $dark2, $dark2 2.5rem,
-              $dark 2.5rem, $dark 2.6rem,
-              $dark2 2.6rem, $dark2 2.8rem,
-              $dark 2.8rem, $dark 2.9rem);
+          text-shadow: 1px 1px 0px $default, 1px -1px 0px $default,
+            -1px 1px 0px $default, -1px -1px 0px $default;
+          background: repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 2.5rem,
+              $dark 2.5rem,
+              $dark 2.6rem,
+              transparent 2.6rem,
+              transparent 2.8rem,
+              $dark 2.8rem,
+              $dark 2.9rem
+            ),
+            repeating-linear-gradient(
+              -45deg,
+              $dark2,
+              $dark2 2.5rem,
+              $dark 2.5rem,
+              $dark 2.6rem,
+              $dark2 2.6rem,
+              $dark2 2.8rem,
+              $dark 2.8rem,
+              $dark 2.9rem
+            );
         }
       }
 
@@ -88,7 +96,7 @@
         row-gap: 0;
       }
 
-      @media (max-width:$break-sm) {
+      @media (max-width: $break-sm) {
         display: none;
 
         position: fixed;
@@ -102,7 +110,7 @@
         padding-bottom: 1em;
         border-bottom: 2px solid $dark;
 
-        &>li,
+        & > li,
         & .link {
           height: $header-height;
         }
@@ -141,7 +149,6 @@
     display: inline-block;
     border-radius: 0.5em;
     border: 1px solid $dark;
-    height: 2.5em;
   }
 }
 
@@ -149,7 +156,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  border-radius: .5 * $header-height;
+  border-radius: 0.5 * $header-height;
   height: $header-height;
 
   @media (min-width: $break-sm) {
