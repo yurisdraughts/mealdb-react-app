@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import Youtube from "../components/Youtube";
 import useSmoothDisplayChange from "../utils/useSmoothDisplayChange";
+import { initialLoadingMsg, getLoadingMsgEffect } from "../utils/loadingMsg";
 import customFetch from "../utils/customFetch";
 import TitleContext from "../utils/TitleContext";
 import FetchCacheContext from "../utils/FetchCacheContext";
@@ -13,37 +14,33 @@ export default function Meal() {
     transition: showPage,
   } = useSmoothDisplayChange({ show: { new: 1 } });
 
+  const { id } = useParams();
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   if (error !== null) throw error;
 
-  const [ingredients, setIngredients] = useState([]);
-  const [videoSrc, setVideoSrc] = useState(null);
-
-  const { setTitleSuffix } = useContext(TitleContext);
-
-  const { id } = useParams();
-  let url;
-
-    url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-
   const cache = useContext(FetchCacheContext);
   useEffect(() => {
-      customFetch({
-        setLoading,
-        setData,
-        setError,
-        url,
-        cache,
-        dataExtractor: (data) => data.meals[0],
-      });
+    customFetch({
+      setLoading,
+      setData,
+      setError,
+      url,
+      cache,
+      dataExtractor: (data) => data.meals[0],
+    });
 
     return () => {
       showPage();
     };
   }, [id]);
 
+  const { setTitleSuffix } = useContext(TitleContext);
+  const [ingredients, setIngredients] = useState([]);
+  const [videoSrc, setVideoSrc] = useState(null);
   useEffect(() => {
     if (data) {
       setTitleSuffix(data.strMeal);
@@ -67,10 +64,18 @@ export default function Meal() {
     }
   }, [data]);
 
+  const [loadingMsg, setLoadingMsg] = useState(initialLoadingMsg);
+  useEffect(getLoadingMsgEffect(loading, setLoadingMsg), [loading]);
+
   return (
-    <div className="page display-none" ref={pageRef}>
+    <div className="display-none" ref={pageRef}>
+      {loading && (
+        <div className="blur blur_loading">
+          <h1>{loadingMsg.join("")}</h1>
+        </div>
+      )}
       {!loading && data && (
-        <>
+        <div className="page">
           <h1>{data.strMeal}</h1>
           <img
             className="meal__image"
@@ -121,7 +126,7 @@ export default function Meal() {
             </p>
             {videoSrc && <Youtube src={videoSrc} />}
           </footer>
-        </>
+        </div>
       )}
     </div>
   );

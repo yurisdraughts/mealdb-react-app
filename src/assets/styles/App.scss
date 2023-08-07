@@ -209,6 +209,11 @@
   &_youtube {
     z-index: 20;
   }
+
+  &_loading {
+    display: grid;
+    place-items: center;
+  }
 }
 
 .youtube-player {

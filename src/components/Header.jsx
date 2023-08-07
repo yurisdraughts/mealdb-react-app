@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useSmoothDisplayChange from "../utils/useSmoothDisplayChange";
 
@@ -24,16 +24,28 @@ export default function Header() {
   const [displayMenu, setDisplayMenu] = useState(getMediaMatch());
   const { pathname } = useLocation();
 
+  const A = ({ to, text }) => {
+    return (
+      <Link
+        className="link"
+        to={to}
+        onClick={() => {
+          if (!getMediaMatch()) {
+            hideMenu();
+          }
+        }}
+      >
+        <span>{text}</span>
+      </Link>
+    );
+  };
+
   window.onresize = () => {
     if (getMediaMatch()) {
       setDisplayMenu(true);
       blurRef.current.classList.add("display-none");
     } else setDisplayMenu(false);
   };
-
-  useEffect(() => {
-    if (getMediaMatch()) showNav();
-  }, [pathname]);
 
   return (
     <>
@@ -47,43 +59,31 @@ export default function Header() {
           >
             {pathname === "/" || (
               <li>
-                <Link className="link" to="/">
-                  <span>Home</span>
-                </Link>
+                <A to="/" text="Home" />
               </li>
             )}
             {pathname === "/categories" || (
               <li>
-                <Link className="link" to="/categories">
-                  <span>Category List</span>
-                </Link>
+                <A to="/categories" text="Category List" />
               </li>
             )}
             {pathname === "/ingredients" || (
               <li>
-                <Link className="link" to="/ingredients">
-                  <span>Ingredients List</span>
-                </Link>
+                <A to="/ingredients" text="Ingredients List" />
               </li>
             )}
             {pathname === "/areas" || (
               <li>
-                <Link className="link" to="/areas">
-                  <span>Areas List</span>
-                </Link>
+                <A to="/areas" text="Areas List" />
               </li>
             )}
             {pathname === "/first-letters" || (
               <li>
-                <Link className="link" to="/first-letters">
-                  <span>Meals By First Letter</span>
-                </Link>
+                <A to="/first-letters" text="Meals By First Letter" />
               </li>
             )}
             <li>
-              <Link className="link" to="/meal">
-                <span>Random Meal</span>
-              </Link>
+              <A to="/meal" text="Random Meal" />
             </li>
             <li>
               <button
