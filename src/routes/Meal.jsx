@@ -1,4 +1,4 @@
-import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import Youtube from "../components/Youtube";
 import useSmoothDisplayChange from "../utils/useSmoothDisplayChange";
@@ -8,8 +8,6 @@ import FetchCacheContext from "../utils/FetchCacheContext";
 import fallbackImage from "../assets/images/meal-icon.png";
 
 export default function Meal() {
-  const { pathname } = useLocation();
-
   const {
     show: [pageRef],
     transition: showPage,
@@ -20,45 +18,18 @@ export default function Meal() {
   const [error, setError] = useState(null);
   if (error !== null) throw error;
 
-  const [redirected, setRedirected] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [videoSrc, setVideoSrc] = useState(null);
 
   const { setTitleSuffix } = useContext(TitleContext);
 
-  const navigate = useNavigate();
   const { id } = useParams();
   let url;
 
-  if (id) {
     url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-  } else {
-    url = "https://www.themealdb.com/api/json/v1/1/random.php";
-  }
 
   const cache = useContext(FetchCacheContext);
   useEffect(() => {
-    if (!id) {
-      customFetch({
-        setLoading,
-        setData,
-        setError,
-        url,
-        cache,
-        dataExtractor: (data) => data.meals[0],
-        callback: (meal) => {
-          navigate(`/meal/${meal.idMeal}`, { replace: true });
-        },
-        cleanup: () => {
-          setRedirected(true);
-        },
-      });
-      return;
-    }
-
-    if (redirected) {
-      setRedirected(false);
-    } else {
       customFetch({
         setLoading,
         setData,
@@ -67,12 +38,11 @@ export default function Meal() {
         cache,
         dataExtractor: (data) => data.meals[0],
       });
-    }
 
     return () => {
       showPage();
     };
-  }, [pathname]);
+  }, [id]);
 
   useEffect(() => {
     if (data) {
