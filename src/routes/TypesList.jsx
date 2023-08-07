@@ -10,6 +10,9 @@ export default function TypesList() {
     show: [pageRef],
     transition: showPage,
   } = useSmoothDisplayChange({ show: { new: 1 } });
+  useEffect(() => {
+    showPage();
+  }, []);
 
   const { type } = useParams();
   let url;
@@ -29,7 +32,7 @@ export default function TypesList() {
 
   const [apiProperty, setApiProperty] = useState();
   const cache = useContext(FetchCacheContext);
-  
+
   useEffect(() => {
     customFetch({
       setLoading,

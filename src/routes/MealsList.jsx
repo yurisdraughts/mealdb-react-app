@@ -11,7 +11,10 @@ export default function MealsList() {
     show: [pageRef],
     transition: showPage,
   } = useSmoothDisplayChange({ show: { new: 1 } });
-
+  useEffect(() => {
+    showPage();
+  }, []);
+  
   const { type, subtype } = useParams();
   let url;
 

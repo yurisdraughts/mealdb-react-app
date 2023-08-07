@@ -13,7 +13,10 @@ export default function Meal() {
     show: [pageRef],
     transition: showPage,
   } = useSmoothDisplayChange({ show: { new: 1 } });
-
+  useEffect(() => {
+    showPage();
+  }, []);
+  
   const { id } = useParams();
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
